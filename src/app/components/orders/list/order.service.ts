@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { Ingredient } from '../../../shared/ingredient.model';
 import { catchError } from 'rxjs/operators';
 
-const baseUrl = 'https://react-my-burger-3dbec.firebaseio.com/orders.json';
+const baseUrl = 'https://burger-angular-d121c.firebaseio.com/orders.json';
 @Injectable({
   providedIn: 'root'
 })
