@@ -23,10 +23,9 @@ export class OrdersComponent implements OnInit {
 
   getAllOrders(){
     this.orderService.getAll().subscribe(
-        res => {
-          console.log('res', res);
-          for (const key in res) {
-          this.orders.push({...res[key], id: key });
+        responseData => {
+          for (const key in responseData) {
+          this.orders.push({...responseData[key], id: key });
         }
       }
       );

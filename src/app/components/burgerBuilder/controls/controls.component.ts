@@ -1,16 +1,17 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { AuthService } from '../../login/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { Subscription } from 'rxjs';
 
+import { IngredientState } from '../../utils';
 @Component({
   selector: 'app-controls',
   templateUrl: './controls.component.html',
   styleUrls: ['./controls.component.css']
 })
 export class ControlsComponent implements OnInit {
-  @Input() state: any;
+  @Input() state: IngredientState;
   @Output() updateStateOutputCallback: EventEmitter<any> = new EventEmitter<any>();
-  controlsIngredients: any;
+  controlsIngredients: object;
   isAuthenticated = false;
   private userSub: Subscription;
 
@@ -25,19 +26,19 @@ export class ControlsComponent implements OnInit {
     this.controlsIngredients = Object.keys( this.state.ingredients )
       .map( ingredientName => ingredientName )
       .reduce((prev, current) => {
-          return prev.concat(current)
+        return prev.concat(current);
       }, []);
 
   }
 
-  addIngredient(type) {
-    const oldCount = this.state.ingredients[type];
+  addIngredient(ingredient: string ) {
+    const oldCount = this.state.ingredients[ingredient];
     const updatedCount = oldCount + 1;
     const updatedIngredients = {
         ...this.state.ingredients
     };
-    updatedIngredients[type] = updatedCount;
-    const priceAddition = this.state.ingredientsPrice[type];
+    updatedIngredients[ingredient] = updatedCount;
+    const priceAddition = this.state.ingredientsPrice[ingredient];
     const oldPrice = this.state.totalPrice;
     const newPrice = oldPrice + priceAddition;
     this.state.totalPrice = newPrice;
@@ -45,8 +46,8 @@ export class ControlsComponent implements OnInit {
     this.updatePurchaseState(updatedIngredients);
   }
 
-  removeIngredient ( type ) {
-    const oldCount = this.state.ingredients[type];
+  removeIngredient( ingredient: string ) {
+    const oldCount = this.state.ingredients[ingredient];
     if ( oldCount <= 0 ) {
         return;
     }
@@ -54,8 +55,8 @@ export class ControlsComponent implements OnInit {
     const updatedIngredients = {
         ...this.state.ingredients
     };
-    updatedIngredients[type] = updatedCount;
-    const priceDeduction = this.state.ingredientsPrice[type];
+    updatedIngredients[ingredient] = updatedCount;
+    const priceDeduction = this.state.ingredientsPrice[ingredient];
     const oldPrice = this.state.totalPrice;
     const newPrice = oldPrice - priceDeduction;
     this.state.totalPrice = newPrice;
@@ -63,11 +64,11 @@ export class ControlsComponent implements OnInit {
     this.updatePurchaseState(updatedIngredients);
   }
 
-  updatePurchaseState (ingredients) {
+  updatePurchaseState(ingredients: { [x: string]: any; }) {
     const sum = Object.keys( ingredients )
-      .map( igKey => {
-          return ingredients[igKey];
-      } )
+      .map( ingredientKey => {
+          return ingredients[ingredientKey];
+      })
       .reduce( ( sum, el ) => {
           return sum + el;
       }, 0 );

@@ -8,7 +8,7 @@ import { BurgerIngredientComponent } from './components/burgerBuilder/burger/bur
 import { ControlsComponent } from './components/burgerBuilder/controls/controls.component';
 import { OrderSummaryComponent } from './components/orders/summary/order-summary.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AuthComponent } from './components/login/auth.component';
+import { AuthComponent } from './components/auth/auth.component';
 import { OrdersComponent } from './components/orders/list/orders.component';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';

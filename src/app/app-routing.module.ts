@@ -4,15 +4,16 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { BurgerComponent } from './components/burgerBuilder/burger/burger.component';
 import { OrdersComponent } from './components/orders/list/orders.component';
-import { AuthComponent } from './components/login/auth.component';
+import { AuthComponent } from './components/auth/auth.component';
 import { CheckoutsummaryComponent } from './components/checkoutsummary/checkoutsummary.component';
+import { AuthGuard } from './components/auth/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '', component: BurgerComponent },
-  { path: 'login', component: AuthComponent },
-  { path: 'orders', component: OrdersComponent },
-  { path: 'checkout', component: CheckoutsummaryComponent },
+  { path: 'auth', component: AuthComponent },
+  { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
+  { path: 'checkout', component: CheckoutsummaryComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

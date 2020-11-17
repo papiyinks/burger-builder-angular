@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { Ingredient } from '../../../shared/ingredient.model';
+// import { Ingredient } from '../../../shared/ingredient.model';
 import { catchError } from 'rxjs/operators';
 
-const baseUrl = 'https://burger-angular-d121c.firebaseio.com/orders.json';
+const baseUrl = `https://burger-angular-d121c.firebaseio.com/orders.json`;
 @Injectable({
   providedIn: 'root'
 })
@@ -13,26 +13,23 @@ export class OrderService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<any> {
-    const main = localStorage.getItem('token');
-    const Token = main.replace(/['"]+/g, '');
+    const token = localStorage.getItem('token').replace(/['"]+/g, '');
 
-    const main1 = localStorage.getItem('userId');
-    const userId = main1.replace(/['"]+/g, '');
+    const userId = localStorage.getItem('userId').replace(/['"]+/g, '');
 
-    const queryParams = '?auth=' + Token + '&orderBy="userId"&equalTo="' + userId + '"';
-    return this.http.get(baseUrl + queryParams);
+    const queryParams = `?auth=${token}&orderBy="userId"&equalTo="${userId}"`;
+    return this.http.get(`${baseUrl}${queryParams}`);
   }
 
   saveOrder(price, ingredients, userId) {
-    const main = localStorage.getItem('token');
-    const Token = main.replace(/['"]+/g, '');
+    const token = localStorage.getItem('token').replace(/['"]+/g, '');
 
-    return this.http.post(baseUrl + '?auth=' + Token, {
+    return this.http.post(`${baseUrl}?auth=${token}`, {
         price, ingredients, userId
       }
     )
     .pipe(
-      catchError(errorRes => {
+      catchError(errorResponse => {
         const errorMessage = 'An error occurred!';
         return throwError(errorMessage);
       })

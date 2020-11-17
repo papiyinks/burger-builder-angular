@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { IngredientState } from '../../utils';
+
 @Component({
   selector: 'app-burger',
   templateUrl: './burger.component.html',
@@ -7,7 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BurgerComponent implements OnInit {
 
-  state: any = {
+
+  state: IngredientState = {
     ingredients: null,
     ingredientsPrice: null,
     totalPrice: 4,
@@ -16,7 +19,7 @@ export class BurgerComponent implements OnInit {
   addedIngredients: any;
 
   constructor() {
-   }
+  }
 
   ngOnInit(): void {
     this.state.ingredients = {
@@ -45,12 +48,11 @@ export class BurgerComponent implements OnInit {
         .reduce((prev, current) => {
           return prev.concat(current);
         }, []);
-        localStorage.setItem('data', JSON.stringify(this.addedIngredients));
+    localStorage.setItem('data', JSON.stringify(this.addedIngredients));
       }
 
-  updateStateOutputCallback(event: any) {
+  updateStateOutputCallback(event: { state: IngredientState; }) {
     this.state = event.state;
     this.getAddedIngredients();
   }
-
 }

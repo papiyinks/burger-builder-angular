@@ -5,8 +5,6 @@
         <div class="seeds"></div>
         <div class="seeds2"></div>
       </div>
-
-      <!-- <p *ngIf="addedIngredients.length === 0">Please start adding ingredients!</p> -->
       <app-burger-ingredient *ngFor="let ingredient of orderIngredients;" type="{{ingredient}}"></app-burger-ingredient>
 
       <div class="bread-bottom"></div>
@@ -21,7 +19,7 @@
   <hr my-2 />
   <div *ngIf="open" class="ContactData">
     <h4>Enter your Contact Data</h4>
-    <form #f="ngForm">
+    <form #checkOutSummaryForm="ngForm">
       <div class="form-group">
         <input type="text" ngModel name="name" class="form-control" placeholder="Your Name" required/>
       </div>
@@ -43,7 +41,7 @@
           <option>Fastest</option>
         </select>
       </div>
-      <button (click)="onSubmit()" class="my-3 btn-md" [disabled]="!f.valid">Order</button>
+      <button (click)="onSubmit()" class="my-3 btn-md" [disabled]="!checkOutSummaryForm.valid">Order</button>
     </form>
   </div>
 </div>
