@@ -9,10 +9,19 @@ import { IngredientState } from '../../utils';
 })
 export class BurgerComponent implements OnInit {
 
-
   state: IngredientState = {
-    ingredients: null,
-    ingredientsPrice: null,
+    ingredients: {
+      salad: 0,
+      meat: 0,
+      cheese: 0,
+      bacon: 0
+    },
+    ingredientsPrice: {
+      salad: 0.5,
+      meat: 0.3,
+      cheese: 0.6,
+      bacon: 1.0
+    },
     totalPrice: 4,
     purchasable: false
   };
@@ -22,18 +31,10 @@ export class BurgerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.state.ingredients = {
-      salad: 0,
-      meat: 0,
-      cheese: 0,
-      bacon: 0
-    };
-    this.state.ingredientsPrice = {
-      salad: 0.5,
-      meat: 0.3,
-      cheese: 0.6,
-      bacon: 1.0
-    };
+    const localState = JSON.parse(localStorage.getItem('data'));
+
+    this.state = localState ? localState : this.state;
+    this.getAddedIngredients();
 
     this.getAddedIngredients();
   }
@@ -48,11 +49,12 @@ export class BurgerComponent implements OnInit {
         .reduce((prev, current) => {
           return prev.concat(current);
         }, []);
-    localStorage.setItem('data', JSON.stringify(this.addedIngredients));
+    localStorage.setItem('orderData', JSON.stringify(this.addedIngredients));
       }
 
   updateStateOutputCallback(event: { state: IngredientState; }) {
     this.state = event.state;
     this.getAddedIngredients();
+    localStorage.setItem('data', JSON.stringify(this.state));
   }
 }

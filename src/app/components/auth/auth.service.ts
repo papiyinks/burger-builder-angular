@@ -100,6 +100,10 @@ export class AuthService {
     this.user.next(null);
     this.router.navigate(['/']);
     localStorage.removeItem('userData');
+    localStorage.removeItem('orderData');
+    localStorage.removeItem('price');
+    localStorage.removeItem('data');
+    localStorage.removeItem('orderItem');
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
     }

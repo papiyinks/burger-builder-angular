@@ -54,7 +54,7 @@ export class AuthComponent implements OnDestroy {
     }
 
     authObs.subscribe(
-      resData => {
+      responseData => {
         this.isLoading = false;
         this.router.navigate(['/']);
       },
